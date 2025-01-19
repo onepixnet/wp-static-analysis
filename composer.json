@@ -1,0 +1,19 @@
+{
+    "name": "onepix/wp-static-analysis",
+    "description": "Psalm, PHPCS and Rector configs for use in WP",
+    "license": "Apache-2.0",
+    "autoload": {
+        "psr-4": {
+            "Onepix\\WpStaticAnalysis\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "onepix"
+        },
+        {
+            "name": "0zd0"
+        }
+    ],
+    "require": {}
+}
