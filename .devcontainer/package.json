@@ -1,0 +1,13 @@
+{
+    "name": "devcontainer-config",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "",
+    "main": "generate-config.js",
+    "scripts": {
+        "generate": "node generate-config.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
