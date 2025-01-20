@@ -72,4 +72,8 @@
     <rule ref="PSR12"/>
 
     <rule ref="Squiz.NamingConventions.ValidVariableName"/>
+
+    <!-- OnepixStandard rules -->
+    <rule ref="OnepixStandard.Declarations.StrictTypes" />
+    <rule ref="OnepixStandard.WP.AbspathAfterNamespace" />
 </ruleset>

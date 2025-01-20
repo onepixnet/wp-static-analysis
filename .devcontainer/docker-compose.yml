@@ -1,0 +1,8 @@
+name: onepix-wp-static-analysis
+
+services:
+  php:
+    build:
+      context: .
+    volumes:
+      - './php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini'

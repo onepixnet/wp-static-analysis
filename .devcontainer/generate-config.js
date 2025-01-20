@@ -26,9 +26,10 @@ if (platform === 'win32') {
 
 const config = {
     name: 'Onepix WP Static Analysis',
-    build: {
-        dockerfile: "Dockerfile"
-    },
+    dockerComposeFile: [
+        "./docker-compose.yml"
+    ],
+    service: "php",
     customizations: {
         jetbrains: {
         },

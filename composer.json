@@ -2,9 +2,16 @@
     "name": "onepix/wp-static-analysis",
     "description": "Psalm, PHPCS and Rector configs for use in WP",
     "license": "Apache-2.0",
+    "keywords": [ "phpcs", "dev", "psalm", "rector" ],
     "autoload": {
         "psr-4": {
-            "Onepix\\WpStaticAnalysis\\": "src/"
+            "OnepixStandard\\": "OnepixStandard/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Onepix\\WpStaticAnalysis\\Tests\\": "tests/",
+            "PHP_CodeSniffer\\Tests\\": "vendor/squizlabs/php_codesniffer/tests/"
         }
     },
     "authors": [
@@ -15,12 +22,23 @@
             "name": "0zd0"
         }
     ],
+    "require": {
+        "php": "^8.1",
+        "wp-coding-standards/wpcs": "^3.0",
+        "squizlabs/php_codesniffer": "*"
+    },
     "require-dev": {
-        "wp-coding-standards/wpcs": "^3.0"
+        "phpunit/phpunit": "^10"
     },
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "scripts": {
+        "test:phpcs": "phpunit -c phpunit.phpcs.xml --coverage-filter OnepixStandard",
+        "check": [
+            "@test:phpcs"
+        ]
     }
 }
