@@ -1,0 +1,9 @@
+<?php
+
+namespace OnepixStandard\Tests\WP;
+
+defined('ABSPATH') || exit;
+
+use Test;
+
+defined('ABSPATH') || exit;

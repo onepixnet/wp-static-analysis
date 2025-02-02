@@ -6,83 +6,113 @@ namespace OnepixStandard\Sniffs\WP;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
-class AbspathAfterNamespaceSniff implements Sniff {
-	private const REQUIRED_CONSTANT = "'ABSPATH'";
-	private const EXPECTED_SEQUENCE = [
-		T_STRING,    // defined
-		T_OPEN_PARENTHESIS,
-		T_CONSTANT_ENCAPSED_STRING, // 'ABSPATH'
-		T_CLOSE_PARENTHESIS,
-		T_BOOLEAN_OR,  // ||
-		T_EXIT,     // exit
-		T_OPEN_PARENTHESIS,
-		T_CLOSE_PARENTHESIS,
-		T_SEMICOLON
-	];
+class AbspathAfterNamespaceSniff implements Sniff
+{
+    private const REQUIRED_CONSTANT = "'ABSPATH'";
+    private const EXPECTED_SEQUENCE = [
+        // defined
+        T_STRING,
+        // (
+        T_OPEN_PARENTHESIS,
+        // 'ABSPATH'
+        T_CONSTANT_ENCAPSED_STRING,
+        // )
+        T_CLOSE_PARENTHESIS,
+        // ||
+        T_BOOLEAN_OR,
+        // exit
+        T_EXIT,
+        // ;
+        T_SEMICOLON
+    ];
 
-	public function register(): array {
-		return [ T_NAMESPACE ];
-	}
+    public function register(): array
+    {
+        return [T_NAMESPACE];
+    }
 
-	public function process(File $phpcsFile, $stackPtr): void
-	{
-		$namespaceEnd = $phpcsFile->findEndOfStatement($stackPtr);
-		$nextToken = $phpcsFile->findNext(T_WHITESPACE, ($namespaceEnd + 1), null, true);
+    public function process(
+        File $phpcsFile,
+             $stackPtr
+    ): void
+    {
+        $namespaceEnd = $phpcsFile->findEndOfStatement($stackPtr);
 
-		if ($nextToken === false) {
-			$phpcsFile->addError(
-				'Missing ABSPATH check after namespace declaration',
-				$stackPtr,
-				'MissingAbspathCheck'
-			);
-			return;
-		}
+        $startPosition = $namespaceEnd + 1;
+        $found = $this->findDefinedABSPATHSequence($phpcsFile, $startPosition);
 
-		if (!$this->isValidSequence($phpcsFile, $nextToken)) {
-			$fix = $phpcsFile->addFixableError(
-				'Missing or incorrect ABSPATH check after namespace declaration',
-				$stackPtr,
-				'IncorrectAbspathCheck'
-			);
+        if (!$found) {
+            $fix = $phpcsFile->addFixableError(
+                'After the namespace there should be a line defined(\'ABSPATH\') || exit;',
+                $namespaceEnd,
+                'MissingABSPATHCheck'
+            );
 
-			if ($fix) {
-				$phpcsFile->fixer->beginChangeset();
-				$phpcsFile->fixer->addNewline($namespaceEnd);
-				$phpcsFile->fixer->addContent($namespaceEnd, "\ndefined('ABSPATH') || exit();");
-				$phpcsFile->fixer->endChangeset();
-			}
-		}
-	}
+            if ($fix) {
+                $this->applyFix($phpcsFile, $namespaceEnd);
+            }
+        }
+    }
 
-	private function isValidSequence(File $phpcsFile, int $startPos): bool
-	{
-		$tokens = $phpcsFile->getTokens();
-		$pos = $startPos;
+    private function findDefinedABSPATHSequence(
+        File $phpcsFile,
+        int  $position
+    ): bool
+    {
+        $tokens = $phpcsFile->getTokens();
+        $currentPosition = $position;
 
-		foreach (self::EXPECTED_SEQUENCE as $expected) {
-			if (!isset($tokens[$pos])) {
-				return false;
-			}
+        foreach (self::EXPECTED_SEQUENCE as $expectedTokenCode) {
+            // Skip spaces and comments
+            $currentPosition = $phpcsFile->findNext(
+                [T_WHITESPACE, T_COMMENT],
+                $currentPosition,
+                null,
+                true
+            );
 
-			// Check the token type
-			if (is_int($expected) && $tokens[$pos]['code'] !== $expected) {
-				return false;
-			}
+            if ($currentPosition === false) {
+                return false;
+            }
 
-			// Checking a constant
-			if ($tokens[$pos]['code'] === T_CONSTANT_ENCAPSED_STRING) {
-				if ($tokens[$pos]['content'] !== self::REQUIRED_CONSTANT) {
-					return false;
-				}
-			}
+            $currentToken = $tokens[$currentPosition];
 
-			// Skip spaces
-			$pos = $phpcsFile->findNext(T_WHITESPACE, $pos + 1, null, true);
-			if ($pos === false) {
-				return false;
-			}
-		}
+            // Checking compliance with the token code
+            if ($currentToken['code'] !== $expectedTokenCode) {
+                return false;
+            }
 
-		return true;
-	}
+            // Additional content checks for specific tokens
+            switch ($expectedTokenCode) {
+                case T_STRING:
+                    if (strtolower($currentToken['content']) !== 'defined') {
+                        return false;
+                    }
+                    break;
+                case T_CONSTANT_ENCAPSED_STRING:
+                    if ($currentToken['content'] !== self::REQUIRED_CONSTANT) {
+                        return false;
+                    }
+                    break;
+            }
+
+            $currentPosition++;
+        }
+
+        return true;
+    }
+
+    private function applyFix(File $phpcsFile, int $namespaceEnd): void
+    {
+        $phpcsFile->fixer->beginChangeset();
+
+        $phpcsFile->fixer->addNewline($namespaceEnd);
+        $phpcsFile->fixer->addNewline($namespaceEnd);
+        $phpcsFile->fixer->addContent(
+            $namespaceEnd,
+            "defined('ABSPATH') || exit;"
+        );
+
+        $phpcsFile->fixer->endChangeset();
+    }
 }
