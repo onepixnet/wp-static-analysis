@@ -14,6 +14,7 @@
     <phpcs_settings>
       <PhpCSConfiguration beautifier_path="$PROJECT_DIR$/vendor/bin/phpcbf" tool_path="$PROJECT_DIR$/vendor/bin/phpcs" />
       <phpcs_by_interpreter interpreter_id="759bd1e9-ddaf-46d3-aeff-7137a83e5d2e" timeout="30000" />
+      <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="fc698df6-a131-403b-a7ac-d8e9e7b530cc" beautifier_path="$PROJECT_DIR$/vendor/bin/phpcbf" tool_path="/IdeaProjects/wp-static-analysis/vendor/bin/phpcs" timeout="30000" />
     </phpcs_settings>
   </component>
   <component name="PhpIncludePathManager">
@@ -56,6 +57,7 @@
   <component name="PhpStan">
     <PhpStan_settings>
       <phpstan_by_interpreter interpreter_id="759bd1e9-ddaf-46d3-aeff-7137a83e5d2e" timeout="60000" />
+      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="fc698df6-a131-403b-a7ac-d8e9e7b530cc" timeout="60000" />
     </PhpStan_settings>
   </component>
   <component name="PhpStanOptionsConfiguration">
@@ -69,6 +71,7 @@
   <component name="Psalm">
     <Psalm_settings>
       <psalm_fixer_by_interpreter interpreter_id="759bd1e9-ddaf-46d3-aeff-7137a83e5d2e" timeout="60000" />
+      <psalm_fixer_by_interpreter asDefaultInterpreter="true" interpreter_id="fc698df6-a131-403b-a7ac-d8e9e7b530cc" timeout="60000" />
     </Psalm_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
