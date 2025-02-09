@@ -1,37 +1,42 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Cli\PHPCS;
 
+use Onepix\WpStaticAnalysis\Cli\Factory\Process\DefaultProcessFactory;
+use Onepix\WpStaticAnalysis\Cli\Factory\Process\ProcessFactoryInterface;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 
 abstract class AbstractCommand extends Command
 {
     protected const PHPCS_ARGUMENT = 'options';
     protected const RULESET_OPTION = 'ruleset';
 
+    /**
+     * @var string|null
+     */
+    private ?string $basePath;
     protected RulesetLocator $rulesetLocator;
+    private ProcessFactoryInterface $processFactory;
 
     /**
      * @return string
      */
     abstract protected function getBinaryName(): string;
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return void
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output): void
-    {
+    public function __construct(
+        ?string $name = null
+    ) {
+        parent::__construct($name);
+
         $this->rulesetLocator = new RulesetLocator();
+        $this->processFactory = new DefaultProcessFactory();
+        $this->basePath = getcwd();
     }
 
     /**
@@ -67,12 +72,11 @@ abstract class AbstractCommand extends Command
         $binaryPath = $this->findBinary();
         $command = [
             $binaryPath,
-            ...$args,
+            ...(is_array($args) ? $args : []),
             '--standard=' . $rulesetPath,
         ];
 
-        $process = new Process($command);
-        $process->setTimeout(300);
+        $process = $this->processFactory->create($command);
 
         $process->run(function ($type, $buffer) use ($output) {
             $output->write($buffer);
@@ -84,13 +88,37 @@ abstract class AbstractCommand extends Command
     }
 
     /**
+     * @param string|null $basePath
+     */
+    public function setBasePath(?string $basePath): void
+    {
+        $this->basePath = $basePath;
+    }
+
+    /**
+     * @param RulesetLocator $rulesetLocator
+     */
+    public function setRulesetLocator(RulesetLocator $rulesetLocator): void
+    {
+        $this->rulesetLocator = $rulesetLocator;
+    }
+
+    /**
+     * @param ProcessFactoryInterface $processFactory
+     */
+    public function setProcessFactory(ProcessFactoryInterface $processFactory): void
+    {
+        $this->processFactory = $processFactory;
+    }
+
+    /**
      * @return string
      */
     protected function findBinary(): string
     {
         $binaryName = $this->getBinaryName();
 
-        $localBinary = getcwd() . "/vendor/bin/{$binaryName}";
+        $localBinary = $this->basePath . "/vendor/bin/{$binaryName}";
         if (file_exists($localBinary)) {
             return $localBinary;
         }

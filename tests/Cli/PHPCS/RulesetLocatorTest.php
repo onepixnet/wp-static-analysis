@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Tests\Cli\PHPCS;
@@ -9,6 +8,7 @@ use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use ReflectionException;
 use RuntimeException;
 
 #[CoversClass(RulesetLocator::class)]
@@ -47,7 +47,7 @@ class RulesetLocatorTest extends TestCase
     /**
      * @return void
      */
-    public function testCustomRulesetDoesNotExist(): void
+    public function testCustomRulesetNotExist(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Custom ruleset not found: ./folder/missing.xml');
@@ -84,6 +84,12 @@ class RulesetLocatorTest extends TestCase
 
     /**
      * @dataProvider absolutePathDataProvider
+     *
+     * @param string $basePath
+     * @param string $relativePath
+     * @param string $expected
+     * @return void
+     * @throws ReflectionException
      */
     public function testGetAbsolutePath(string $basePath, string $relativePath, string $expected): void
     {
