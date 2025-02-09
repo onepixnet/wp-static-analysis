@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         bootstrap="tests/bootstrap.php" backupGlobals="true" beStrictAboutTestsThatDoNotTestAnything="false"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         colors="true" cacheDirectory=".phpunit.cache" requireCoverageMetadata="true">
+    <coverage>
+        <report>
+            <text outputFile="php://stdout" showOnlySummary="true"/>
+        </report>
+    </coverage>
+    <source>
+        <include>
+            <directory suffix=".php">Cli</directory>
+        </include>
+    </source>
+    <testsuites>
+        <testsuite name="CLI">
+            <directory suffix="Test.php">tests/Cli</directory>
+        </testsuite>
+    </testsuites>
+    <logging/>
+</phpunit>

@@ -12,6 +12,24 @@ class RulesetLocator
     private const PROJECT_RULESET_PATH = 'config/ruleset.xml';
 
     /**
+     * @var string|null
+     */
+    private ?string $basePath;
+
+    public function __construct()
+    {
+        $this->basePath = getcwd();
+    }
+
+    /**
+     * @param string|null $basePath
+     */
+    public function setBasePath(?string $basePath): void
+    {
+        $this->basePath = $basePath;
+    }
+
+    /**
      * Returns the path to the configuration file
      *
      * @param string|null $customRuleset User path to the configuration (relative to the project root)
@@ -44,6 +62,6 @@ class RulesetLocator
      */
     private function getAbsolutePath(string $relativePath): string
     {
-        return getcwd() . '/' . ltrim($relativePath, '/');
+        return $this->basePath . '/' . ltrim($relativePath, '/');
     }
 }

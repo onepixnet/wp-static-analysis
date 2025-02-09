@@ -8,6 +8,8 @@
   </component>
   <component name="PHPCodeSnifferOptionsConfiguration">
     <option name="highlightLevel" value="WARNING" />
+    <option name="installedPaths" value="$PROJECT_DIR$/ruleset.xml" />
+    <option name="useInstalledPaths" value="true" />
     <option name="transferred" value="true" />
   </component>
   <component name="PhpCodeSniffer">
@@ -16,6 +18,9 @@
       <phpcs_by_interpreter interpreter_id="759bd1e9-ddaf-46d3-aeff-7137a83e5d2e" timeout="30000" />
       <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="fc698df6-a131-403b-a7ac-d8e9e7b530cc" beautifier_path="$PROJECT_DIR$/vendor/bin/phpcbf" tool_path="/IdeaProjects/wp-static-analysis/vendor/bin/phpcs" timeout="30000" />
     </phpcs_settings>
+  </component>
+  <component name="PhpExternalFormatter">
+    <option name="externalFormatter" value="PHP_CBF" />
   </component>
   <component name="PhpIncludePathManager">
     <include_path>
@@ -62,13 +67,13 @@
       <path value="$PROJECT_DIR$/vendor/psr/container" />
       <path value="$PROJECT_DIR$/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/vendor/onepix/wp-coding-standards" />
+      <path value="$PROJECT_DIR$/vendor/mikey179/vfsstream" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
   <component name="PhpStan">
     <PhpStan_settings>
       <phpstan_by_interpreter interpreter_id="759bd1e9-ddaf-46d3-aeff-7137a83e5d2e" timeout="60000" />
-      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="fc698df6-a131-403b-a7ac-d8e9e7b530cc" timeout="60000" />
     </PhpStan_settings>
   </component>
   <component name="PhpStanOptionsConfiguration">
@@ -82,7 +87,6 @@
   <component name="Psalm">
     <Psalm_settings>
       <psalm_fixer_by_interpreter interpreter_id="759bd1e9-ddaf-46d3-aeff-7137a83e5d2e" timeout="60000" />
-      <psalm_fixer_by_interpreter asDefaultInterpreter="true" interpreter_id="fc698df6-a131-403b-a7ac-d8e9e7b530cc" timeout="60000" />
     </Psalm_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
