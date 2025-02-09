@@ -54,9 +54,13 @@
         "bin/wp-static-analysis"
     ],
     "scripts": {
-        "test:phpcs": "phpunit -c phpunit.phpcs.xml --coverage-filter OnepixStandard",
+        "fix:cs": "phpcbf --standard=./ruleset.xml",
+        "check:cs": "phpcs --standard=./ruleset.xml",
+
+        "check:test": "",
         "check": [
-            "@test:phpcs"
+            "@check:cs",
+            "@check:test"
         ]
     }
 }
