@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76bbb14c2bf8ed0a8172cd201279d7a8",
+    "content-hash": "113fcdeb61fd7e072b85c7789091aa87",
     "packages": [
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
@@ -90,12 +90,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:onepixnet/wp-coding-standards.git",
-                "reference": "00e826787705a568c05427d22e09bbe7ed24ee3f"
+                "reference": "6443dc6ffa2072f9e6f3437cca9d694b244d0388"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/onepixnet/wp-coding-standards/zipball/00e826787705a568c05427d22e09bbe7ed24ee3f",
-                "reference": "00e826787705a568c05427d22e09bbe7ed24ee3f",
+                "url": "https://api.github.com/repos/onepixnet/wp-coding-standards/zipball/6443dc6ffa2072f9e6f3437cca9d694b244d0388",
+                "reference": "6443dc6ffa2072f9e6f3437cca9d694b244d0388",
                 "shasum": ""
             },
             "require": {
@@ -119,11 +119,18 @@
                 }
             },
             "scripts": {
-                "test:phpcs": [
+                "fix:cs": [
+                    "phpcbf --standard=./ruleset.xml"
+                ],
+                "check:cs": [
+                    "phpcs --standard=./ruleset.xml"
+                ],
+                "check:test": [
                     "phpunit -c phpunit.xml --coverage-filter WpOnepixStandard"
                 ],
                 "check": [
-                    "@test:phpcs"
+                    "@check:cs",
+                    "@check:test"
                 ]
             },
             "license": [
@@ -144,7 +151,7 @@
                 "standards",
                 "static analysis"
             ],
-            "time": "2025-02-09T00:05:09+00:00"
+            "time": "2025-02-09T00:26:03+00:00"
         },
         {
             "name": "phpcsstandards/phpcsextra",
