@@ -6,13 +6,17 @@
 
 ## CLI
 
-#### PHPCS
+#### PHP_CodeSniffer
 
 ```shell
 vendor/bin/wp-static-analysis phpcs [PHPCS-ARGS] [CLI-ARGS]
 ```
 
-`[PHPCS-ARGS]`: Arguments from [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
+```shell
+vendor/bin/wp-static-analysis phpcbf [PHPCS-ARGS] [CLI-ARGS]
+```
+
+`[PHPCS-ARGS]`: Arguments from [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
 
 `[CLI-ARGS]`:
 
