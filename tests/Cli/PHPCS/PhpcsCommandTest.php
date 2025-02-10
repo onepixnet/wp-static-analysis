@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Tests\Cli\PHPCS;
@@ -10,6 +11,9 @@ use PHPUnit\Framework\TestCase;
 use ReflectionException;
 use ReflectionMethod;
 
+/**
+ * Test class for PhpcsCommand.
+ */
 #[CoversClass(PhpcsCommand::class)]
 class PhpcsCommandTest extends TestCase
 {
@@ -17,6 +21,9 @@ class PhpcsCommandTest extends TestCase
 
     private AbstractCommand $command;
 
+    /**
+     * @inheritDoc
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -25,6 +32,8 @@ class PhpcsCommandTest extends TestCase
     }
 
     /**
+     * Tests the getBinaryName method
+     *
      * @return void
      * @throws ReflectionException
      */

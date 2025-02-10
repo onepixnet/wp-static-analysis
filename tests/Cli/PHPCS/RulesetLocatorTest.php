@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Tests\Cli\PHPCS;
@@ -11,6 +12,9 @@ use ReflectionClass;
 use ReflectionException;
 use RuntimeException;
 
+/**
+ * Test class for RulesetLocator.
+ */
 #[CoversClass(RulesetLocator::class)]
 class RulesetLocatorTest extends TestCase
 {
@@ -20,7 +24,7 @@ class RulesetLocatorTest extends TestCase
     private RulesetLocator $locator;
 
     /**
-     * @return void
+     * @inheritDoc
      */
     protected function setUp(): void
     {
@@ -28,6 +32,8 @@ class RulesetLocatorTest extends TestCase
     }
 
     /**
+     * Tests locating a custom ruleset
+     *
      * @return void
      */
     public function testCustomRuleset(): void
@@ -45,6 +51,8 @@ class RulesetLocatorTest extends TestCase
     }
 
     /**
+     * Tests the scenario where the custom ruleset does not exist
+     *
      * @return void
      */
     public function testCustomRulesetNotExist(): void
@@ -56,6 +64,8 @@ class RulesetLocatorTest extends TestCase
     }
 
     /**
+     * Tests locating the project ruleset
+     *
      * @return void
      */
     public function testProjectRuleset(): void
@@ -73,6 +83,8 @@ class RulesetLocatorTest extends TestCase
     }
 
     /**
+     * Tests the default standard ruleset
+     *
      * @return void
      */
     public function testDefaultStandard(): void
@@ -83,13 +95,14 @@ class RulesetLocatorTest extends TestCase
     }
 
     /**
-     * @dataProvider absolutePathDataProvider
+     * Tests getting the absolute path.
      *
-     * @param string $basePath
-     * @param string $relativePath
-     * @param string $expected
+     * @param string $basePath The base path.
+     * @param string $relativePath The relative path.
+     * @param string $expected The expected absolute path.
      * @return void
      * @throws ReflectionException
+     * @dataProvider absolutePathDataProvider
      */
     public function testGetAbsolutePath(string $basePath, string $relativePath, string $expected): void
     {
@@ -103,6 +116,8 @@ class RulesetLocatorTest extends TestCase
     }
 
     /**
+     * Data provider for absolute path tests
+     *
      * @return array<string, array{string, string, string}>
      */
     public static function absolutePathDataProvider(): array

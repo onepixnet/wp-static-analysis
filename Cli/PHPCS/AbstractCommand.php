@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Cli\PHPCS;
@@ -7,28 +8,39 @@ use Onepix\WpStaticAnalysis\Cli\Factory\Process\DefaultProcessFactory;
 use Onepix\WpStaticAnalysis\Cli\Factory\Process\ProcessFactoryInterface;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Base command for PHP CodeSniffer related commands
+ */
 abstract class AbstractCommand extends Command
 {
     protected const PHPCS_ARGUMENT = 'options';
     protected const RULESET_OPTION = 'ruleset';
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null Base path for file resolution */
     private ?string $basePath;
+
+    /** @var RulesetLocator Responsible for finding ruleset files */
     protected RulesetLocator $rulesetLocator;
+
+    /** @var ProcessFactoryInterface Factory for creating processes */
     private ProcessFactoryInterface $processFactory;
 
     /**
+     * Get the name of the PHPCS binary to execute
+     *
      * @return string
      */
     abstract protected function getBinaryName(): string;
 
+    /**
+     * @inheritDoc
+     */
     public function __construct(
         ?string $name = null
     ) {
@@ -40,7 +52,7 @@ abstract class AbstractCommand extends Command
     }
 
     /**
-     * @return void
+     * @inheritDoc
      */
     protected function configure(): void
     {
@@ -59,9 +71,7 @@ abstract class AbstractCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
+     * @inheritDoc
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -88,6 +98,8 @@ abstract class AbstractCommand extends Command
     }
 
     /**
+     * Set base path for file resolution
+     *
      * @param string|null $basePath
      */
     public function setBasePath(?string $basePath): void
@@ -96,6 +108,8 @@ abstract class AbstractCommand extends Command
     }
 
     /**
+     * Set custom ruleset locator
+     *
      * @param RulesetLocator $rulesetLocator
      */
     public function setRulesetLocator(RulesetLocator $rulesetLocator): void
@@ -104,6 +118,8 @@ abstract class AbstractCommand extends Command
     }
 
     /**
+     * Set custom process factory
+     *
      * @param ProcessFactoryInterface $processFactory
      */
     public function setProcessFactory(ProcessFactoryInterface $processFactory): void
@@ -112,7 +128,11 @@ abstract class AbstractCommand extends Command
     }
 
     /**
+     * Find PHPCS binary in vendor or global path
+     *
      * @return string
+     *
+     * @throws RuntimeException If binary is not found
      */
     protected function findBinary(): string
     {

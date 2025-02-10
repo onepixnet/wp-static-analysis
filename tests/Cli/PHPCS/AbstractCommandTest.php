@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Tests\Cli\PHPCS;
@@ -19,6 +20,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
+/**
+ * Test class for AbstractCommand.
+ */
 #[CoversClass(AbstractCommand::class)]
 class AbstractCommandTest extends TestCase
 {
@@ -58,6 +62,11 @@ class AbstractCommandTest extends TestCase
         $this->commandMock->setProcessFactory(new MockProcessFactory($this->processMock));
     }
 
+    /**
+     * Prepares a temporary directory for testing
+     *
+     * @return void
+     */
     private function prepareTemp(): void
     {
         $this->fakeBinDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . str_replace('\\', '_', static::class);
@@ -68,6 +77,11 @@ class AbstractCommandTest extends TestCase
         chmod($this->fakeBinDir . DIRECTORY_SEPARATOR . self::FAKE_BIN, 0755);
     }
 
+    /**
+     * Cleans up the temporary directory after testing
+     *
+     * @return void
+     */
     private function cleanTemp(): void
     {
         if (file_exists($this->fakeBinDir)) {
@@ -81,6 +95,8 @@ class AbstractCommandTest extends TestCase
     }
 
     /**
+     * Tests the successful execution of the command
+     *
      * @return void
      * @throws ReflectionException
      * @throws Exception
@@ -108,6 +124,8 @@ class AbstractCommandTest extends TestCase
     }
 
     /**
+     * Tests the failure execution of the command
+     *
      * @return void
      * @throws ReflectionException
      * @throws Exception
@@ -126,6 +144,8 @@ class AbstractCommandTest extends TestCase
     }
 
     /**
+     * Tests the getBinaryName method
+     *
      * @return void
      * @throws ReflectionException
      */
@@ -137,6 +157,8 @@ class AbstractCommandTest extends TestCase
     }
 
     /**
+     * Tests finding the binary in the vendor directory
+     *
      * @return void
      * @throws ReflectionException
      */
@@ -158,6 +180,8 @@ class AbstractCommandTest extends TestCase
     }
 
     /**
+     * Tests finding the binary in the global PATH
+     *
      * @return void
      * @throws ReflectionException
      */
@@ -177,6 +201,8 @@ class AbstractCommandTest extends TestCase
     }
 
     /**
+     * Tests the scenario where the binary does not exist
+     *
      * @return void
      * @throws ReflectionException
      */

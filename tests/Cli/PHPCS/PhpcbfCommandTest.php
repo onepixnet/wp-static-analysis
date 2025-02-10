@@ -9,6 +9,9 @@ use PHPUnit\Framework\TestCase;
 use ReflectionException;
 use ReflectionMethod;
 
+/**
+ * Test class for PhpcbfCommand.
+ */
 #[CoversClass(PhpcbfCommand::class)]
 class PhpcbfCommandTest extends TestCase
 {
@@ -16,6 +19,9 @@ class PhpcbfCommandTest extends TestCase
 
     private AbstractCommand $command;
 
+    /**
+     * @inheritDoc
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -24,6 +30,8 @@ class PhpcbfCommandTest extends TestCase
     }
 
     /**
+     * Tests the getBinaryName method
+     *
      * @return void
      * @throws ReflectionException
      */
