@@ -59,7 +59,7 @@ abstract class AbstractCommand extends Command
         $this
             ->addArgument(
                 self::PHPCS_ARGUMENT,
-                InputArgument::IS_ARRAY | InputArgument::REQUIRED,
+                InputArgument::IS_ARRAY,
                 'Spell out any arguments related to PHPCS with a space.'
             )
             ->addOption(
