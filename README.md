@@ -9,11 +9,11 @@
 #### PHP_CodeSniffer
 
 ```shell
-vendor/bin/wp-static-analysis phpcs [PHPCS-ARGS] [CLI-ARGS]
+vendor/bin/wp-static-analysis phpcs [CLI-ARGS] [--] [<PHPCS-ARGS>...]
 ```
 
 ```shell
-vendor/bin/wp-static-analysis phpcbf [PHPCS-ARGS] [CLI-ARGS]
+vendor/bin/wp-static-analysis phpcbf [CLI-ARGS] [--] [<PHPCS-ARGS>...]
 ```
 
 `[PHPCS-ARGS]`: Arguments from [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
