@@ -30,15 +30,9 @@
             "name": "0zd0"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/onepixnet/wp-coding-standards.git"
-        }
-    ],
     "require": {
         "php": "^8.1",
-        "onepix/wp-coding-standards": "dev-main",
+        "onepix/wp-coding-standards": "^1",
         "symfony/console": "^6",
         "symfony/process": "^6"
     },
