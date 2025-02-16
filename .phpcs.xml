@@ -3,7 +3,9 @@
     <rule ref="PSR12"/>
 
     <arg name="extensions" value="php" />
-    <arg name="colors"/>
+    <arg name="colors" />
+    <arg name="cache" />
+    <arg value="ps" />
     <file>./Cli</file>
     <file>./tests</file>
     <exclude-pattern>*/tests/Integration/Project/*</exclude-pattern>

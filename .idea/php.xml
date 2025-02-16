@@ -69,24 +69,6 @@
       <path value="$PROJECT_DIR$/vendor/symfony/process" />
       <path value="$PROJECT_DIR$/vendor/onepix/wp-coding-standards" />
       <path value="$PROJECT_DIR$/vendor/mikey179/vfsstream" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/symfony/service-contracts" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/symfony/string" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/symfony/console" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/symfony/polyfill-intl-normalizer" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/symfony/polyfill-mbstring" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/symfony/process" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/squizlabs/php_codesniffer" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/dealerdirect/phpcodesniffer-composer-installer" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/phpcsstandards/phpcsextra" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/phpcsstandards/phpcsutils" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/composer" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/wp-coding-standards/wpcs" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/psr/container" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/onepix/wp-static-analysis" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/onepix/wp-coding-standards" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/symfony/polyfill-intl-grapheme" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/symfony/polyfill-ctype" />
-      <path value="$PROJECT_DIR$/tests/Integration/Project/vendor/symfony/deprecation-contracts" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
