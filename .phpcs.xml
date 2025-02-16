@@ -6,4 +6,5 @@
     <arg name="colors"/>
     <file>./Cli</file>
     <file>./tests</file>
+    <exclude-pattern>*/tests/Integration/Project/*</exclude-pattern>
 </ruleset>

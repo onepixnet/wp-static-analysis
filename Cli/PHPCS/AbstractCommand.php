@@ -20,13 +20,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class AbstractCommand extends Command
 {
     protected const PHPCS_ARGUMENT = 'options';
-    protected const RULESET_OPTION = 'ruleset';
+    protected const STANDARD_OPTION = 'standard';
 
     /** @var string|null Base path for file resolution */
     private ?string $basePath;
 
-    /** @var RulesetLocator Responsible for finding ruleset files */
-    protected RulesetLocator $rulesetLocator;
+    /** @var StandardLocator Responsible for finding standard files */
+    protected StandardLocator $standardLocator;
 
     /** @var ProcessFactoryInterface Factory for creating processes */
     private ProcessFactoryInterface $processFactory;
@@ -46,7 +46,7 @@ abstract class AbstractCommand extends Command
     ) {
         parent::__construct($name);
 
-        $this->rulesetLocator = new RulesetLocator();
+        $this->standardLocator = new StandardLocator();
         $this->processFactory = new DefaultProcessFactory();
         $this->basePath = getcwd();
     }
@@ -63,10 +63,10 @@ abstract class AbstractCommand extends Command
                 'Spell out any arguments related to PHPCS with a space.'
             )
             ->addOption(
-                self::RULESET_OPTION,
+                self::STANDARD_OPTION,
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Path to custom ruleset.xml relative to project root'
+                'Path to custom phpcs.xml relative to project root'
             );
     }
 
@@ -76,14 +76,14 @@ abstract class AbstractCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $args = $input->getArgument(self::PHPCS_ARGUMENT);
-        $customRulesetFile = $input->getOption(self::RULESET_OPTION);
-        $rulesetPath = $this->rulesetLocator->locate($customRulesetFile);
+        $customStandardFile = $input->getOption(self::STANDARD_OPTION);
+        $standardPath = $this->standardLocator->locate($customStandardFile);
 
         $binaryPath = $this->findBinary();
         $command = [
             $binaryPath,
             ...(is_array($args) ? $args : []),
-            '--standard=' . $rulesetPath,
+            '--standard=' . $standardPath,
         ];
 
         $process = $this->processFactory->create($command);
@@ -108,13 +108,13 @@ abstract class AbstractCommand extends Command
     }
 
     /**
-     * Set custom ruleset locator
+     * Set custom standard locator
      *
-     * @param RulesetLocator $rulesetLocator
+     * @param StandardLocator $standardLocator
      */
-    public function setRulesetLocator(RulesetLocator $rulesetLocator): void
+    public function setStandardLocator(StandardLocator $standardLocator): void
     {
-        $this->rulesetLocator = $rulesetLocator;
+        $this->standardLocator = $standardLocator;
     }
 
     /**

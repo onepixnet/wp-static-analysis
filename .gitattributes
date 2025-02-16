@@ -1,4 +1,5 @@
 /.devcontainer export-ignore
+/.github export-ignore
 /tests export-ignore
 /.idea export-ignore
 /.gitattributes export-ignore

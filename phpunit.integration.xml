@@ -3,20 +3,10 @@
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
          bootstrap="tests/bootstrap.php" backupGlobals="true" beStrictAboutTestsThatDoNotTestAnything="false"
          displayDetailsOnTestsThatTriggerWarnings="true"
-         colors="true" cacheDirectory=".phpunit.cache" requireCoverageMetadata="true">
-    <coverage>
-        <report>
-            <text outputFile="php://stdout" showOnlySummary="true"/>
-        </report>
-    </coverage>
-    <source>
-        <include>
-            <directory suffix=".php">Cli</directory>
-        </include>
-    </source>
+         colors="true" cacheDirectory=".phpunit.cache">
     <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">tests/Unit</directory>
+        <testsuite name="Integration">
+            <directory suffix="Test.php">tests/Integration</directory>
         </testsuite>
     </testsuites>
     <logging/>

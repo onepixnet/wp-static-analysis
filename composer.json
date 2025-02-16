@@ -49,12 +49,17 @@
         "bin/wp-static-analysis"
     ],
     "scripts": {
-        "fix:cs": "phpcbf --standard=./ruleset.xml",
-        "check:cs": "phpcs --standard=./ruleset.xml",
-        "check:test": "phpunit -c phpunit.xml",
+        "fix:cs": "phpcbf",
+        "check:cs": "phpcs",
+        "tests:unit": "phpunit -c phpunit.xml",
+        "tests:integration": "phpunit -c phpunit.integration.xml",
+        "check:tests": [
+            "@tests:unit",
+            "@tests:integration"
+        ],
         "check": [
             "@check:cs",
-            "@check:test"
+            "@check:tests"
         ]
     }
 }

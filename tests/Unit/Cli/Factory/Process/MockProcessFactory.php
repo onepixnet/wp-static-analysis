@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Onepix\WpStaticAnalysis\Tests\Cli\Factory\Process;
+namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\Factory\Process;
 
 use Onepix\WpStaticAnalysis\Cli\Factory\Process\ProcessFactoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;

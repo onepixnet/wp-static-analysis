@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Onepix\WpStaticAnalysis\Tests\Cli\PHPCS;
+namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
 
 use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractCommand;
-use Onepix\WpStaticAnalysis\Cli\PHPCS\RulesetLocator;
-use Onepix\WpStaticAnalysis\Tests\Cli\Factory\Process\MockProcessFactory;
+use Onepix\WpStaticAnalysis\Cli\PHPCS\StandardLocator;
+use Onepix\WpStaticAnalysis\Tests\Unit\Cli\Factory\Process\MockProcessFactory;
+use Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS\AbstractCommandImplementation;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\Exception;
@@ -49,7 +50,7 @@ class AbstractCommandTest extends TestCase
         $this->outputMock = $this->createMock(OutputInterface::class);
         $this->processMock = $this->createMock(Process::class);
 
-        $rulesetLocatorMock = $this->createMock(RulesetLocator::class);
+        $rulesetLocatorMock = $this->createMock(StandardLocator::class);
         $rulesetLocatorMock->method('locate')->willReturn('/path/to/ruleset.xml');
 
         $this->commandMock = $this->getMockBuilder(AbstractCommandImplementation::class)
@@ -58,7 +59,7 @@ class AbstractCommandTest extends TestCase
         $this->commandMock->expects($this->any())
             ->method('findBinary')
             ->willReturn(self::MOCK_BINARY_PATH);
-        $this->commandMock->setRulesetLocator($rulesetLocatorMock);
+        $this->commandMock->setStandardLocator($rulesetLocatorMock);
         $this->commandMock->setProcessFactory(new MockProcessFactory($this->processMock));
     }
 

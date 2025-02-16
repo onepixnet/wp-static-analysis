@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Onepix\WpStaticAnalysis\Tests\Cli\PHPCS;
+namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
 
-use Onepix\WpStaticAnalysis\Cli\PHPCS\RulesetLocator;
+use Onepix\WpStaticAnalysis\Cli\PHPCS\StandardLocator;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -13,26 +13,26 @@ use ReflectionException;
 use RuntimeException;
 
 /**
- * Test class for RulesetLocator.
+ * Test class for StandardLocator.
  */
-#[CoversClass(RulesetLocator::class)]
-class RulesetLocatorTest extends TestCase
+#[CoversClass(StandardLocator::class)]
+class StandardLocatorTest extends TestCase
 {
     /**
-     * @var RulesetLocator
+     * @var StandardLocator
      */
-    private RulesetLocator $locator;
+    private StandardLocator $locator;
 
     /**
      * @inheritDoc
      */
     protected function setUp(): void
     {
-        $this->locator = new RulesetLocator();
+        $this->locator = new StandardLocator();
     }
 
     /**
-     * Tests locating a custom ruleset
+     * Tests locating a custom standard
      *
      * @return void
      */
@@ -51,39 +51,39 @@ class RulesetLocatorTest extends TestCase
     }
 
     /**
-     * Tests the scenario where the custom ruleset does not exist
+     * Tests the scenario where the custom standard does not exist
      *
      * @return void
      */
     public function testCustomRulesetNotExist(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Custom ruleset not found: ./folder/missing.xml');
+        $this->expectExceptionMessage('Custom standard not found: ./folder/missing.xml');
 
         $this->locator->locate('./folder/missing.xml');
     }
 
     /**
-     * Tests locating the project ruleset
+     * Tests locating the project standard
      *
      * @return void
      */
     public function testProjectRuleset(): void
     {
         $root = vfsStream::setup('project', null, [
-            'config' => [
-                'ruleset.xml' => ''
+            '.config' => [
+                'phpcs.xml' => ''
             ]
         ]);
         $this->locator->setBasePath($root->url());
         $result = $this->locator->locate();
 
-        $expectedPath = $root->url() . '/config/ruleset.xml';
+        $expectedPath = $root->url() . '/.config/phpcs.xml';
         $this->assertEquals($expectedPath, $result);
     }
 
     /**
-     * Tests the default standard ruleset
+     * Tests the default standard
      *
      * @return void
      */
@@ -108,7 +108,7 @@ class RulesetLocatorTest extends TestCase
     {
         $this->locator->setBasePath($basePath);
 
-        $reflection = new ReflectionClass(RulesetLocator::class);
+        $reflection = new ReflectionClass(StandardLocator::class);
         $method = $reflection->getMethod('getAbsolutePath');
 
         $result = $method->invoke($this->locator, $relativePath);
@@ -125,18 +125,18 @@ class RulesetLocatorTest extends TestCase
         return [
             'simple path' => [
                 '/var/www',
-                'config/ruleset.xml',
-                '/var/www/config/ruleset.xml'
+                '.config/phpcs.xml',
+                '/var/www/.config/phpcs.xml'
             ],
             'path with leading slash' => [
                 '/var/www',
-                '/config/ruleset.xml',
-                '/var/www/config/ruleset.xml'
+                '/.config/phpcs.xml',
+                '/var/www/.config/phpcs.xml'
             ],
             'path with multiple slashes' => [
                 '/var/www',
-                '//config///ruleset.xml',
-                '/var/www/config///ruleset.xml'
+                '//.config///phpcs.xml',
+                '/var/www/.config///phpcs.xml'
             ],
             'empty relative path' => [
                 '/var/www',

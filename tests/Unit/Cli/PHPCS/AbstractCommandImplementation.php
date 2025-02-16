@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Onepix\WpStaticAnalysis\Tests\Cli\PHPCS;
+namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
 
 use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractCommand;
 

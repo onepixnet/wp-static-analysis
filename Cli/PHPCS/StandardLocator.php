@@ -7,12 +7,17 @@ namespace Onepix\WpStaticAnalysis\Cli\PHPCS;
 use RuntimeException;
 
 /**
- * Locates PHPCS ruleset files with fallback to default standard
+ * Locates PHPCS standard files with fallback to default standard
  */
-class RulesetLocator
+class StandardLocator
 {
     private const DEFAULT_STANDARD_NAME = 'WpOnepixStandard';
-    private const PROJECT_RULESET_PATH = 'config/ruleset.xml';
+    private const PROJECT_STANDARD_PATHS = [
+        '.config/.phpcs.xml',
+        '.config/phpcs.xml',
+        '.config/.phpcs.xml.dist',
+        '.config/phpcs.xml.dist',
+    ];
 
     /** @var string|null Base path for resolving relative paths */
     private ?string $basePath;
@@ -33,34 +38,36 @@ class RulesetLocator
     }
 
     /**
-     * Locate ruleset file with fallback logic
+     * Locate standard file
      *
-     * @param string|null $customRuleset Custom ruleset path (relative to base path)
+     * @param string|null $customStandard Custom standard path (relative to base path)
      * @return string
      *
-     * @throws RuntimeException If custom ruleset is specified but not found
+     * @throws RuntimeException If custom standard is specified but not found
      */
     public function locate(
-        ?string $customRuleset = null
+        ?string $customStandard = null
     ): string {
-        if ($customRuleset !== null) {
-            $absoluteCustomPath = $this->getAbsolutePath($customRuleset);
+        if ($customStandard !== null) {
+            $absoluteCustomPath = $this->getAbsolutePath($customStandard);
             if (file_exists($absoluteCustomPath)) {
                 return $absoluteCustomPath;
             }
-            throw new RuntimeException("Custom ruleset not found: {$customRuleset}");
+            throw new RuntimeException("Custom standard not found: {$customStandard}");
         }
 
-        $projectRulesetPath = $this->getAbsolutePath(self::PROJECT_RULESET_PATH);
-        if (file_exists($projectRulesetPath)) {
-            return $projectRulesetPath;
+        foreach (self::PROJECT_STANDARD_PATHS as $path) {
+            $absolutePath = $this->getAbsolutePath($path);
+            if (file_exists($absolutePath)) {
+                return $absolutePath;
+            }
         }
 
         return self::DEFAULT_STANDARD_NAME;
     }
 
     /**
-     * Convert relative path to absolute using base path
+     * Converting a relative path to an absolute path using a base path
      *
      * @param string $relativePath Relative path (from the project root)
      * @return string

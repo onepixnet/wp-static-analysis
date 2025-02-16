@@ -1,21 +1,23 @@
 <?php
 
-namespace Onepix\WpStaticAnalysis\Tests\Cli\PHPCS;
+declare(strict_types=1);
+
+namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
 
 use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractCommand;
-use Onepix\WpStaticAnalysis\Cli\PHPCS\PhpcbfCommand;
+use Onepix\WpStaticAnalysis\Cli\PHPCS\PhpcsCommand;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 use ReflectionMethod;
 
 /**
- * Test class for PhpcbfCommand.
+ * Test class for PhpcsCommand.
  */
-#[CoversClass(PhpcbfCommand::class)]
-class PhpcbfCommandTest extends TestCase
+#[CoversClass(PhpcsCommand::class)]
+class PhpcsCommandTest extends TestCase
 {
-    private const BIN = 'phpcbf';
+    private const BIN = 'phpcs';
 
     private AbstractCommand $command;
 
@@ -26,7 +28,7 @@ class PhpcbfCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->command = new PhpcbfCommand();
+        $this->command = new PhpcsCommand();
     }
 
     /**
