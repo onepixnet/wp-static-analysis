@@ -1,0 +1,29 @@
+{
+    "name": "test/project",
+    "type": "project",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../../",
+            "options": {
+                "symlink": false
+            }
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.org",
+            "exclude": ["onepix/wp-static-analysis"]
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "onepix/wp-static-analysis": "@dev"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

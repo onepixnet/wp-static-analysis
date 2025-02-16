@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Onepix Override" namespace="WpOnepixStandard\Override" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+    <rule ref="WpOnepixStandard">
+    </rule>
+    <arg value="sp"/>
+</ruleset>

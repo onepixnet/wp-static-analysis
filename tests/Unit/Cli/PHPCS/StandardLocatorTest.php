@@ -128,6 +128,21 @@ class StandardLocatorTest extends TestCase
                 '.config/phpcs.xml',
                 '/var/www/.config/phpcs.xml'
             ],
+            'simple path 2' => [
+                '/var/www',
+                '.config/.phpcs.xml',
+                '/var/www/.config/.phpcs.xml'
+            ],
+            'simple path 3' => [
+                '/var/www',
+                '.config/.phpcs.xml.dist',
+                '/var/www/.config/.phpcs.xml.dist'
+            ],
+            'simple path 4' => [
+                '/var/www',
+                '.config/phpcs.xml.dist',
+                '/var/www/.config/phpcs.xml.dist'
+            ],
             'path with leading slash' => [
                 '/var/www',
                 '/.config/phpcs.xml',

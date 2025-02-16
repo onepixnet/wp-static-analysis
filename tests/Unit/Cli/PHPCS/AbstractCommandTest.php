@@ -8,6 +8,7 @@ use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractCommand;
 use Onepix\WpStaticAnalysis\Cli\PHPCS\StandardLocator;
 use Onepix\WpStaticAnalysis\Tests\Unit\Cli\Factory\Process\MockProcessFactory;
 use Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS\AbstractCommandImplementation;
+use Onepix\WpStaticAnalysis\Tests\Util\Filesystem;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\Exception;
@@ -50,8 +51,8 @@ class AbstractCommandTest extends TestCase
         $this->outputMock = $this->createMock(OutputInterface::class);
         $this->processMock = $this->createMock(Process::class);
 
-        $rulesetLocatorMock = $this->createMock(StandardLocator::class);
-        $rulesetLocatorMock->method('locate')->willReturn('/path/to/ruleset.xml');
+        $standardLocatorMock = $this->createMock(StandardLocator::class);
+        $standardLocatorMock->method('locate')->willReturn('/path/to/phpcs.xml');
 
         $this->commandMock = $this->getMockBuilder(AbstractCommandImplementation::class)
             ->onlyMethods(['findBinary'])
@@ -59,7 +60,7 @@ class AbstractCommandTest extends TestCase
         $this->commandMock->expects($this->any())
             ->method('findBinary')
             ->willReturn(self::MOCK_BINARY_PATH);
-        $this->commandMock->setStandardLocator($rulesetLocatorMock);
+        $this->commandMock->setStandardLocator($standardLocatorMock);
         $this->commandMock->setProcessFactory(new MockProcessFactory($this->processMock));
     }
 
@@ -85,14 +86,7 @@ class AbstractCommandTest extends TestCase
      */
     private function cleanTemp(): void
     {
-        if (file_exists($this->fakeBinDir)) {
-            array_map(
-                fn (string $file) =>
-                is_dir($file) ? rmdir($file) : unlink($file),
-                glob($this->fakeBinDir . '/' . '*')
-            );
-            rmdir($this->fakeBinDir);
-        }
+        Filesystem::deleteFolder($this->fakeBinDir);
     }
 
     /**

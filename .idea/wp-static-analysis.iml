@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="Onepix\WpStaticAnalysis\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/vendor/squizlabs/php_codesniffer/tests" isTestSource="true" packagePrefix="PHP_CodeSniffer\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/Cli" isTestSource="false" packagePrefix="Onepix\WpStaticAnalysis\Cli\" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/Integration/Project/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dealerdirect/phpcodesniffer-composer-installer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/myclabs/deep-copy" />
