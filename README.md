@@ -1,5 +1,10 @@
 # WP Static Analysis
 
+### TODO
+
+- [ ] Psalm plugin for autoregistration of installed `onepix/*-stubs`
+- [ ] Rector CLI
+
 ### Install
 
 ```shell
