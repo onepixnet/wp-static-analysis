@@ -8,11 +8,13 @@ use Onepix\WpStaticAnalysis\Cli\Factory\Process\DefaultProcessFactory;
 use Onepix\WpStaticAnalysis\Cli\Factory\Process\ProcessFactoryInterface;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 /**
  * Base command for PHP CodeSniffer related commands
@@ -22,11 +24,11 @@ abstract class AbstractCommand extends Command
     protected const PHPCS_ARGUMENT = 'options';
     protected const STANDARD_OPTION = 'standard';
 
-    /** @var string|null Base path for file resolution */
-    private ?string $basePath;
+    /** @var string Base path for file resolution */
+    private string $basePath;
 
-    /** @var StandardLocator Responsible for finding standard files */
-    protected StandardLocator $standardLocator;
+    /** @var StandardLocatorInterface Responsible for finding standard files */
+    protected StandardLocatorInterface $standardLocator;
 
     /** @var ProcessFactoryInterface Factory for creating processes */
     private ProcessFactoryInterface $processFactory;
@@ -40,6 +42,7 @@ abstract class AbstractCommand extends Command
 
     /**
      * @inheritDoc
+     * @throws LogicException
      */
     public function __construct(
         ?string $name = null
@@ -48,12 +51,16 @@ abstract class AbstractCommand extends Command
 
         $this->standardLocator = new StandardLocator();
         $this->processFactory = new DefaultProcessFactory();
-        $this->basePath = getcwd();
+
+        $cwd = getcwd();
+        $this->basePath = $cwd ?: '';
     }
 
     /**
      * @inheritDoc
+     * @throws InvalidArgumentException
      */
+    #[\Override]
     protected function configure(): void
     {
         $this
@@ -72,10 +79,17 @@ abstract class AbstractCommand extends Command
 
     /**
      * @inheritDoc
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     * @throws LogicException
+     * @throws \Symfony\Component\Process\Exception\LogicException
      */
+    #[\Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var array<string>|null $args */
         $args = $input->getArgument(self::PHPCS_ARGUMENT);
+        /** @var string|null $customStandardFile */
         $customStandardFile = $input->getOption(self::STANDARD_OPTION);
         $standardPath = $this->standardLocator->locate($customStandardFile);
 
@@ -88,7 +102,7 @@ abstract class AbstractCommand extends Command
 
         $process = $this->processFactory->create($command);
 
-        $process->run(function ($type, $buffer) use ($output) {
+        $process->run(function (string $type, string $buffer) use ($output) {
             $output->write($buffer);
         });
 
@@ -100,9 +114,9 @@ abstract class AbstractCommand extends Command
     /**
      * Set base path for file resolution
      *
-     * @param string|null $basePath
+     * @param string $basePath
      */
-    public function setBasePath(?string $basePath): void
+    public function setBasePath(string $basePath): void
     {
         $this->basePath = $basePath;
     }
@@ -110,9 +124,9 @@ abstract class AbstractCommand extends Command
     /**
      * Set custom standard locator
      *
-     * @param StandardLocator $standardLocator
+     * @param StandardLocatorInterface $standardLocator
      */
-    public function setStandardLocator(StandardLocator $standardLocator): void
+    public function setStandardLocator(StandardLocatorInterface $standardLocator): void
     {
         $this->standardLocator = $standardLocator;
     }
@@ -133,6 +147,8 @@ abstract class AbstractCommand extends Command
      * @return string
      *
      * @throws RuntimeException If binary is not found
+     * @throws LogicException
+     * @throws \Symfony\Component\Process\Exception\LogicException
      */
     protected function findBinary(): string
     {
@@ -143,13 +159,14 @@ abstract class AbstractCommand extends Command
             return $localBinary;
         }
 
-        $globalBinary = shell_exec("which {$binaryName}");
-        if ($globalBinary !== null) {
-            return trim($globalBinary);
+        $env = getenv();
+        $process = new Process(['which', $binaryName], null, $env);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new RuntimeException("{$binaryName} not found. Install it via Composer.");
         }
 
-        throw new RuntimeException(
-            "{$binaryName} not found. Install it via Composer."
-        );
+        return trim($process->getOutput());
     }
 }

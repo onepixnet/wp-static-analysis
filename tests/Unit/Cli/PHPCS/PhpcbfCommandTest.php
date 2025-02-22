@@ -13,7 +13,7 @@ use ReflectionMethod;
  * Test class for PhpcbfCommand.
  */
 #[CoversClass(PhpcbfCommand::class)]
-class PhpcbfCommandTest extends TestCase
+final class PhpcbfCommandTest extends TestCase
 {
     private const BIN = 'phpcbf';
 
@@ -22,6 +22,7 @@ class PhpcbfCommandTest extends TestCase
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

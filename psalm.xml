@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<psalm
+        checkForThrowsDocblock="true"
+        checkForThrowsInGlobalScope="true"
+        ensureArrayStringOffsetsExist="true"
+        errorLevel="1"
+
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="Cli"/>
+        <directory name="tests"/>
+        <file name="bin/wp-static-analysis"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+            <directory name=".phpunit.cache"/>
+            <directory name=".devcontainer"/>
+            <directory name="tests/Integration/Project"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <PossiblyUnusedProperty errorLevel="suppress" />
+        <PossiblyUnusedMethod errorLevel="suppress" />
+        <UnusedProperty errorLevel="suppress" />
+
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </UnusedClass>
+
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+
+        <MissingThrowsDocblock>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </MissingThrowsDocblock>
+    </issueHandlers>
+</psalm>

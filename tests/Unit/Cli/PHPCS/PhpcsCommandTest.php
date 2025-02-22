@@ -15,7 +15,7 @@ use ReflectionMethod;
  * Test class for PhpcsCommand.
  */
 #[CoversClass(PhpcsCommand::class)]
-class PhpcsCommandTest extends TestCase
+final class PhpcsCommandTest extends TestCase
 {
     private const BIN = 'phpcs';
 
@@ -24,6 +24,7 @@ class PhpcsCommandTest extends TestCase
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

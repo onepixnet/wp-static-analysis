@@ -8,14 +8,17 @@ use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractCommand;
 
 /**
  * Implementation of AbstractCommand for testing purposes.
+ *
+ * @psalm-suppress ClassMustBeFinal
  */
-class AbstractCommandImplementation extends AbstractCommand
+final class AbstractCommandImplementation extends AbstractCommand
 {
     public const FAKE_BIN = 'wow';
 
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function getBinaryName(): string
     {
         return self::FAKE_BIN;

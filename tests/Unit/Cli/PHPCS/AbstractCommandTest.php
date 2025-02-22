@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
 
 use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractCommand;
-use Onepix\WpStaticAnalysis\Cli\PHPCS\StandardLocator;
+use Onepix\WpStaticAnalysis\Cli\PHPCS\StandardLocatorInterface;
 use Onepix\WpStaticAnalysis\Tests\Unit\Cli\Factory\Process\MockProcessFactory;
-use Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS\AbstractCommandImplementation;
 use Onepix\WpStaticAnalysis\Tests\Util\Filesystem;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -26,22 +25,28 @@ use Symfony\Component\Process\Process;
  * Test class for AbstractCommand.
  */
 #[CoversClass(AbstractCommand::class)]
-class AbstractCommandTest extends TestCase
+final class AbstractCommandTest extends TestCase
 {
     private const FAKE_BIN = AbstractCommandImplementation::FAKE_BIN;
     private const MOCK_BINARY_PATH = '/usr/local/bin/test-binary';
 
     private string $fakeBinDir;
     private AbstractCommand $command;
-    private AbstractCommand|MockObject $commandMock;
-    private Process|MockObject $processMock;
-    private InputInterface|MockObject $inputMock;
-    private OutputInterface|MockObject $outputMock;
+    /** @var AbstractCommand&MockObject */
+    private $commandMock;
+
+    /** @var Process&MockObject */
+    private $processMock;
+    /** @var InputInterface&MockObject */
+    private $inputMock;
+    /** @var OutputInterface&MockObject */
+    private $outputMock;
 
     /**
      * @return void
      * @throws Exception
      */
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -51,7 +56,7 @@ class AbstractCommandTest extends TestCase
         $this->outputMock = $this->createMock(OutputInterface::class);
         $this->processMock = $this->createMock(Process::class);
 
-        $standardLocatorMock = $this->createMock(StandardLocator::class);
+        $standardLocatorMock = $this->createMock(StandardLocatorInterface::class);
         $standardLocatorMock->method('locate')->willReturn('/path/to/phpcs.xml');
 
         $this->commandMock = $this->getMockBuilder(AbstractCommandImplementation::class)
@@ -65,31 +70,6 @@ class AbstractCommandTest extends TestCase
     }
 
     /**
-     * Prepares a temporary directory for testing
-     *
-     * @return void
-     */
-    private function prepareTemp(): void
-    {
-        $this->fakeBinDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . str_replace('\\', '_', static::class);
-        if (!file_exists($this->fakeBinDir)) {
-            mkdir($this->fakeBinDir);
-        }
-        touch($this->fakeBinDir . DIRECTORY_SEPARATOR . self::FAKE_BIN);
-        chmod($this->fakeBinDir . DIRECTORY_SEPARATOR . self::FAKE_BIN, 0755);
-    }
-
-    /**
-     * Cleans up the temporary directory after testing
-     *
-     * @return void
-     */
-    private function cleanTemp(): void
-    {
-        Filesystem::deleteFolder($this->fakeBinDir);
-    }
-
-    /**
      * Tests the successful execution of the command
      *
      * @return void
@@ -100,8 +80,8 @@ class AbstractCommandTest extends TestCase
     {
         $this->processMock->expects($this->once())
             ->method('run')
-            ->willReturnCallback(function ($callback) {
-                $callback('stdout', 'Test output');
+            ->willReturnCallback(function (callable $callback) {
+                $callback(Process::OUT, 'Test output');
                 return 0;
             });
         $this->processMock->method('isSuccessful')->willReturn(true);
@@ -113,6 +93,7 @@ class AbstractCommandTest extends TestCase
         $reflectionClass = new ReflectionClass($this->commandMock);
         $executeMethod = $reflectionClass->getMethod('execute');
 
+        /** @var int $result */
         $result = $executeMethod->invoke($this->commandMock, $this->inputMock, $this->outputMock);
 
         $this->assertEquals(0, $result);
@@ -133,6 +114,7 @@ class AbstractCommandTest extends TestCase
         $reflectionClass = new ReflectionClass($this->commandMock);
         $executeMethod = $reflectionClass->getMethod('execute');
 
+        /** @var int $result */
         $result = $executeMethod->invoke($this->commandMock, $this->inputMock, $this->outputMock);
 
         $this->assertEquals(1, $result);
@@ -183,8 +165,8 @@ class AbstractCommandTest extends TestCase
     public function testFindBinaryGlobal(): void
     {
         $this->prepareTemp();
-        $oldPath = getenv('PATH');
-        putenv("PATH=" . $this->fakeBinDir . PATH_SEPARATOR . getenv('PATH'));
+        $oldPath = (string) getenv('PATH');
+        putenv("PATH=" . $this->fakeBinDir . PATH_SEPARATOR . $oldPath);
 
         $method = new ReflectionMethod($this->command, 'findBinary');
         $binaryPath = $method->invoke($this->command);
@@ -208,5 +190,30 @@ class AbstractCommandTest extends TestCase
 
         $method = new ReflectionMethod($this->command, 'findBinary');
         $method->invoke($this->command);
+    }
+
+    /**
+     * Prepares a temporary directory for testing
+     *
+     * @return void
+     */
+    private function prepareTemp(): void
+    {
+        $this->fakeBinDir = sys_get_temp_dir() . DIRECTORY_SEPARATOR . str_replace('\\', '_', static::class);
+        if (!file_exists($this->fakeBinDir)) {
+            mkdir($this->fakeBinDir);
+        }
+        touch($this->fakeBinDir . DIRECTORY_SEPARATOR . self::FAKE_BIN);
+        chmod($this->fakeBinDir . DIRECTORY_SEPARATOR . self::FAKE_BIN, 0755);
+    }
+
+    /**
+     * Cleans up the temporary directory after testing
+     *
+     * @return void
+     */
+    private function cleanTemp(): void
+    {
+        Filesystem::deleteFolder($this->fakeBinDir);
     }
 }

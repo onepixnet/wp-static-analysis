@@ -9,7 +9,7 @@ use RuntimeException;
 /**
  * Locates PHPCS standard files with fallback to default standard
  */
-class StandardLocator
+final class StandardLocator implements StandardLocatorInterface
 {
     private const DEFAULT_STANDARD_NAME = 'WpOnepixStandard';
     private const PROJECT_STANDARD_PATHS = [
@@ -19,20 +19,21 @@ class StandardLocator
         '.config/phpcs.xml.dist',
     ];
 
-    /** @var string|null Base path for resolving relative paths */
-    private ?string $basePath;
+    /** @var string Base path for resolving relative paths */
+    private string $basePath;
 
     public function __construct()
     {
-        $this->basePath = getcwd();
+        $cwd = getcwd();
+        $this->basePath = $cwd ?: '';
     }
 
     /**
      * Set base path for file resolution
      *
-     * @param string|null $basePath
+     * @param string $basePath
      */
-    public function setBasePath(?string $basePath): void
+    public function setBasePath(string $basePath): void
     {
         $this->basePath = $basePath;
     }
@@ -45,6 +46,7 @@ class StandardLocator
      *
      * @throws RuntimeException If custom standard is specified but not found
      */
+    #[\Override]
     public function locate(
         ?string $customStandard = null
     ): string {

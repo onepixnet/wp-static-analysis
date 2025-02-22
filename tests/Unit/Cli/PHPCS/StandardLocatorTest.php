@@ -16,7 +16,7 @@ use RuntimeException;
  * Test class for StandardLocator.
  */
 #[CoversClass(StandardLocator::class)]
-class StandardLocatorTest extends TestCase
+final class StandardLocatorTest extends TestCase
 {
     /**
      * @var StandardLocator
@@ -26,6 +26,7 @@ class StandardLocatorTest extends TestCase
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->locator = new StandardLocator();
@@ -111,6 +112,7 @@ class StandardLocatorTest extends TestCase
         $reflection = new ReflectionClass(StandardLocator::class);
         $method = $reflection->getMethod('getAbsolutePath');
 
+        /** @var string $result */
         $result = $method->invoke($this->locator, $relativePath);
         $this->assertEquals($expected, $result);
     }
@@ -118,7 +120,12 @@ class StandardLocatorTest extends TestCase
     /**
      * Data provider for absolute path tests
      *
-     * @return array<string, array{string, string, string}>
+     * @return string[][]
+     *
+     * @psalm-return array<
+     *     string,
+     *     array{string, string, string}
+     * >
      */
     public static function absolutePathDataProvider(): array
     {

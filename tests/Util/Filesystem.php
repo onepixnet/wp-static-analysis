@@ -6,8 +6,9 @@ namespace Onepix\WpStaticAnalysis\Tests\Util;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 
-class Filesystem
+final class Filesystem
 {
     /**
      * Deleting a directory with all files
@@ -26,6 +27,7 @@ class Filesystem
             RecursiveIteratorIterator::CHILD_FIRST
         );
 
+        /** @var SplFileInfo $file */
         foreach ($files as $file) {
             if ($file->isDir()) {
                 rmdir($file->getRealPath());

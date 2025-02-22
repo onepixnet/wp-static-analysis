@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 /** Tests default process factory configuration */
 #[CoversClass(DefaultProcessFactory::class)]
-class DefaultProcessFactoryTest extends TestCase
+final class DefaultProcessFactoryTest extends TestCase
 {
     /** Verify factory creates processes with expected command line formatting */
     public function testCreatesProcessWithCorrectConfiguration(): void

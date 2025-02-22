@@ -2,14 +2,21 @@
 <?php
 declare(strict_types=1);
 
+/** @psalm-suppress UnresolvableInclude */
 include $_composer_autoload_path ?? __DIR__ . '/../vendor/autoload.php';
 
 use Onepix\WpStaticAnalysis\Cli\PHPCS\PhpcbfCommand;
 use Onepix\WpStaticAnalysis\Cli\PHPCS\PhpcsCommand;
+use Onepix\WpStaticAnalysis\Cli\Psalm\PsalmCommand;
 use Symfony\Component\Console\Application;
 
 $app = new Application('Onepix WP Static Analysis', '1.0.0');
-$app->add(new PhpcsCommand());
-$app->add(new PhpcbfCommand());
-//$app->add(new PsalmCommand());
-$app->run();
+try {
+    $app->add(new PhpcsCommand());
+    $app->add(new PhpcbfCommand());
+    $app->add(new PsalmCommand());
+    $app->run();
+} catch (Throwable $e) {
+    fwrite(STDERR, 'Unexpected error: ' . $e->getMessage() . PHP_EOL);
+    exit(1);
+}

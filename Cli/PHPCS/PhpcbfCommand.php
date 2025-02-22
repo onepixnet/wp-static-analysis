@@ -18,6 +18,7 @@ final class PhpcbfCommand extends AbstractCommand
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function getBinaryName(): string
     {
         return 'phpcbf';

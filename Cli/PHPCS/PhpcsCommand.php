@@ -18,6 +18,7 @@ final class PhpcsCommand extends AbstractCommand
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function getBinaryName(): string
     {
         return 'phpcs';
