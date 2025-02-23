@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
 
-use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractCommand;
+use Onepix\WpStaticAnalysis\Cli\Command\AbstractCommand;
 
 /**
  * Implementation of AbstractCommand for testing purposes.
  *
  * @psalm-suppress ClassMustBeFinal
  */
-final class AbstractCommandImplementation extends AbstractCommand
+class AbstractCommandImplementation extends AbstractCommand
 {
     public const FAKE_BIN = 'wow';
 

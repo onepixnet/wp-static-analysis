@@ -2,7 +2,7 @@
 
 namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
 
-use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractCommand;
+use Onepix\WpStaticAnalysis\Cli\Command\AbstractCommand;
 use Onepix\WpStaticAnalysis\Cli\PHPCS\PhpcbfCommand;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
 
-use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractCommand;
+use Onepix\WpStaticAnalysis\Cli\Command\AbstractCommand;
 use Onepix\WpStaticAnalysis\Cli\PHPCS\PhpcsCommand;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;

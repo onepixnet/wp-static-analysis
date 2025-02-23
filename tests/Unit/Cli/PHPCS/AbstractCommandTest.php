@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
 
-use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractCommand;
-use Onepix\WpStaticAnalysis\Cli\PHPCS\StandardLocatorInterface;
+use Onepix\WpStaticAnalysis\Cli\Command\AbstractCommand;
+use Onepix\WpStaticAnalysis\Cli\ConfigLocator\ConfigLocatorInterface;
 use Onepix\WpStaticAnalysis\Tests\Unit\Cli\Factory\Process\MockProcessFactory;
 use Onepix\WpStaticAnalysis\Tests\Util\Filesystem;
 use org\bovigo\vfs\vfsStream;
@@ -32,15 +32,18 @@ final class AbstractCommandTest extends TestCase
 
     private string $fakeBinDir;
     private AbstractCommand $command;
+
     /** @var AbstractCommand&MockObject */
-    private $commandMock;
+    private AbstractCommand&MockObject $commandMock;
 
     /** @var Process&MockObject */
-    private $processMock;
+    private Process&MockObject $processMock;
+
     /** @var InputInterface&MockObject */
-    private $inputMock;
+    private InputInterface&MockObject $inputMock;
+
     /** @var OutputInterface&MockObject */
-    private $outputMock;
+    private OutputInterface&MockObject $outputMock;
 
     /**
      * @return void
@@ -56,7 +59,7 @@ final class AbstractCommandTest extends TestCase
         $this->outputMock = $this->createMock(OutputInterface::class);
         $this->processMock = $this->createMock(Process::class);
 
-        $standardLocatorMock = $this->createMock(StandardLocatorInterface::class);
+        $standardLocatorMock = $this->createMock(ConfigLocatorInterface::class);
         $standardLocatorMock->method('locate')->willReturn('/path/to/phpcs.xml');
 
         $this->commandMock = $this->getMockBuilder(AbstractCommandImplementation::class)

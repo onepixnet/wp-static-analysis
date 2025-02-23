@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Cli\PHPCS;
 
+use Onepix\WpStaticAnalysis\Cli\PHPCS\AbstractPhpcsCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 /**
@@ -13,7 +14,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
     name: 'phpcbf',
     description: 'Run PHP_CodeSniffer Beautifier and Fixer with custom standards'
 )]
-final class PhpcbfCommand extends AbstractCommand
+final class PhpcbfCommand extends AbstractPhpcsCommand
 {
     /**
      * @inheritDoc

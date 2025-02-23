@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Onepix\WpStaticAnalysis\Cli\Factory\Process;
 
-use InvalidArgumentException;
-use LogicException;
 use Override;
+use Symfony\Component\Process\Exception\InvalidArgumentException;
+use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -20,8 +20,8 @@ final class DefaultProcessFactory implements ProcessFactoryInterface
      * @param array<string> $command The command to run and its arguments
      *
      * @return Process
-     * @throws \Symfony\Component\Process\Exception\InvalidArgumentException
-     * @throws \Symfony\Component\Process\Exception\LogicException
+     * @throws InvalidArgumentException
+     * @throws LogicException
      * */
     #[Override]
     public function create(array $command): Process

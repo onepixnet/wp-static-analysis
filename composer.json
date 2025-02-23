@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Onepix\\WpStaticAnalysis\\Cli\\": "Cli/"
+            "Onepix\\WpStaticAnalysis\\": "src/"
         }
     },
     "autoload-dev": {
@@ -38,7 +38,8 @@
         "symfony/process": "^6",
         "vimeo/psalm": "^6",
         "humanmade/psalm-plugin-wordpress": "^3",
-        "onepix/wordpress-stubs": "*"
+        "onepix/wordpress-stubs": "*",
+        "rector/rector": "^2"
     },
     "require-dev": {
         "phpunit/phpunit": "^10 || ^11",

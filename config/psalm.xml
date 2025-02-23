@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<psalm
+        checkForThrowsDocblock="true"
+        checkForThrowsInGlobalScope="true"
+        disableSuppressAll="true"
+        ensureArrayStringOffsetsExist="true"
+        errorLevel="1"
+        findUnusedBaselineEntry="true"
+        findUnusedCode="true"
+        findUnusedPsalmSuppress="true"
+        findUnusedVariablesAndParams="true"
+        memoizeMethodCallResults="true"
+        sealAllMethods="true"
+        sealAllProperties="true"
+        cacheDirectory="var/psalm"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="src"/>
+        <directory name="tests"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+            <directory name="var"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <stubs>
+        <file name="vendor/onepix/psr11-container-interface-generic/ContainerInterface.php"/>
+        <file name="vendor/onepix/wordpress-stubs/wordpress-stubs.php"/>
+        <file name="vendor/php-stubs/wordpress-tests-stubs/wordpress-tests-stubs.php"/>
+    </stubs>
+
+    <plugins>
+        <pluginClass class="PsalmWordPress\Plugin"/>
+    </plugins>
+
+    <ignoreExceptions>
+        <classAndDescendants name="ReflectionException"/>
+        <classAndDescendants name="LogicException"/>
+        <classAndDescendants name="RuntimeException"/>
+    </ignoreExceptions>
+
+    <issueHandlers>
+        <Trace errorLevel="error"/>
+
+        <PossiblyUnusedReturnValue errorLevel="suppress" />
+        <PossiblyUnusedMethod errorLevel="suppress"/>
+        <PropertyNotSetInConstructor errorLevel="suppress"/>
+        <MixedAssignment errorLevel="suppress"/>
+
+        <MissingThrowsDocblock>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </MissingThrowsDocblock>
+
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <directory name="tests"/>
+            </errorLevel>
+        </UnusedClass>
+
+        <UnresolvableInclude>
+            <errorLevel type="suppress">
+                <file name="tests/bootstrap.php"/>
+            </errorLevel>
+        </UnresolvableInclude>
+    </issueHandlers>
+</psalm>
