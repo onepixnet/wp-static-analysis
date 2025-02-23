@@ -2,25 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
+namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\Psalm;
 
-use Onepix\WpStaticAnalysis\Cli\Command\AbstractCommand;
-use Onepix\WpStaticAnalysis\Cli\PHPCS\PhpcsCommand;
+use Onepix\WpStaticAnalysis\Cli\Psalm\PsalmCommand;
 use Onepix\WpStaticAnalysis\Tests\Util\ExposeProtectedMethods;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
-use ReflectionMethod;
 
 /**
- * Test class for PhpcsCommand.
+ * Test class for PsalmCommand.
  */
-#[CoversClass(PhpcsCommand::class)]
-final class PhpcsCommandTest extends TestCase
+#[CoversClass(PsalmCommand::class)]
+final class PsalmCommandTest extends TestCase
 {
     use ExposeProtectedMethods;
 
-    private AbstractCommand $command;
+    private PsalmCommand $command;
 
     /**
      * @inheritDoc
@@ -30,7 +28,7 @@ final class PhpcsCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->command = new PhpcsCommand();
+        $this->command = new PsalmCommand();
     }
 
     /**
@@ -41,6 +39,6 @@ final class PhpcsCommandTest extends TestCase
      */
     public function testGetBinaryName(): void
     {
-        $this->assertSame('phpcs', $this->callProtectedMethod($this->command, 'getBinaryName'));
+        $this->assertSame('psalm', $this->callProtectedMethod($this->command, 'getBinaryName'));
     }
 }

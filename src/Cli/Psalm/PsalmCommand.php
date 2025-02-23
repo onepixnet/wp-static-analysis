@@ -13,6 +13,10 @@ use Symfony\Component\Console\Attribute\AsCommand;
 )]
 final class PsalmCommand extends AbstractPsalmCommand
 {
+    /**
+     * @inheritDoc
+     */
+    #[\Override]
     protected function getBinaryName(): string
     {
         return 'psalm';

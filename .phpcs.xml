@@ -6,7 +6,7 @@
     <arg name="colors" />
     <arg name="cache" />
     <arg value="ps" />
-    <file>./Cli</file>
+    <file>./src</file>
     <file>./tests</file>
     <exclude-pattern>*/tests/Integration/Project/*</exclude-pattern>
 </ruleset>

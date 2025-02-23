@@ -9,7 +9,6 @@ use Onepix\WpStaticAnalysis\Cli\Factory\Process\ProcessFactoryInterface;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
-use Symfony\Component\Process\Process;
 
 /**
  * Base command for PHP CodeSniffer related commands
@@ -82,7 +81,7 @@ abstract class AbstractCommand extends Command
         }
 
         $env = getenv();
-        $process = new Process(['which', $binaryName], null, $env);
+        $process = $this->processFactory->create(['which', $binaryName], null, $env);
         $process->run();
 
         if (!$process->isSuccessful()) {

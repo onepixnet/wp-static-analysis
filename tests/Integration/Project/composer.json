@@ -20,6 +20,7 @@
         "onepix/wp-static-analysis": "@dev"
     },
     "config": {
+        "lock": false,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }

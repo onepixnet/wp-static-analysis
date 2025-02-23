@@ -15,18 +15,16 @@ use Symfony\Component\Process\Process;
 final class DefaultProcessFactory implements ProcessFactoryInterface
 {
     /**
-     *  Creates process with 5 minute timeout
-     *
-     * @param array<string> $command The command to run and its arguments
+     * @inheritDoc
      *
      * @return Process
      * @throws InvalidArgumentException
      * @throws LogicException
      * */
     #[Override]
-    public function create(array $command): Process
+    public function create(array $command, ?string $cwd = null, ?array $env = null): Process
     {
-        $process = new Process($command);
+        $process = new Process($command, $cwd, $env);
         $process->setTimeout(300);
         return $process;
     }

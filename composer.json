@@ -18,8 +18,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Onepix\\WpStaticAnalysis\\Tests\\": "tests/",
-            "PHP_CodeSniffer\\Tests\\": "vendor/squizlabs/php_codesniffer/tests/"
+            "Onepix\\WpStaticAnalysis\\Tests\\": "tests/"
         }
     },
     "authors": [

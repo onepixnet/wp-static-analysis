@@ -11,7 +11,7 @@
     </coverage>
     <source>
         <include>
-            <directory suffix=".php">Cli</directory>
+            <directory suffix=".php">src</directory>
         </include>
     </source>
     <testsuites>

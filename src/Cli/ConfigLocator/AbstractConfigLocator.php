@@ -20,6 +20,7 @@ abstract class AbstractConfigLocator implements ConfigLocatorInterface
      * @inheritDoc
      * @throws RuntimeException If custom standard is specified but not found
      */
+    #[\Override]
     public function locate(
         ?string $customFile = null
     ): string {

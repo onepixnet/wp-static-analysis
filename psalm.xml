@@ -11,7 +11,7 @@
         xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="Cli"/>
+        <directory name="src"/>
         <directory name="tests"/>
         <file name="bin/wp-static-analysis"/>
         <ignoreFiles>

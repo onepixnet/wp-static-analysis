@@ -20,11 +20,11 @@ composer require --dev onepix/wp-static-analysis
 ### PHP_CodeSniffer
 
 ```shell
-vendor/bin/wp-static-analysis phpcs [OPTIONS] [--] [<PHPCS-ARGS>...]
+vendor/bin/wp-static-analysis phpcs [OPTIONS] -- [<PHPCS-ARGS>...]
 ```
 
 ```shell
-vendor/bin/wp-static-analysis phpcbf [OPTIONS] [--] [<PHPCS-ARGS>...]
+vendor/bin/wp-static-analysis phpcbf [OPTIONS] -- [<PHPCS-ARGS>...]
 ```
 
 `[PHPCS-ARGS]`: Arguments from [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki/Usage)

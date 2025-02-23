@@ -12,6 +12,7 @@ final class PsalmConfigLocator extends AbstractConfigLocator
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function getDefaultConfigPath(): string
     {
         return Package::ROOT_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'psalm.xml';
@@ -20,6 +21,7 @@ final class PsalmConfigLocator extends AbstractConfigLocator
     /**
      * @inheritDoc
      */
+    #[\Override]
     protected function getProjectConfigPaths(): array
     {
         return [

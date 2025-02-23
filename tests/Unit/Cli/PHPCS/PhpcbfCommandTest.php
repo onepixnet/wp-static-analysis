@@ -4,6 +4,7 @@ namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
 
 use Onepix\WpStaticAnalysis\Cli\Command\AbstractCommand;
 use Onepix\WpStaticAnalysis\Cli\PHPCS\PhpcbfCommand;
+use Onepix\WpStaticAnalysis\Tests\Util\ExposeProtectedMethods;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
@@ -15,7 +16,7 @@ use ReflectionMethod;
 #[CoversClass(PhpcbfCommand::class)]
 final class PhpcbfCommandTest extends TestCase
 {
-    private const BIN = 'phpcbf';
+    use ExposeProtectedMethods;
 
     private AbstractCommand $command;
 
@@ -38,8 +39,6 @@ final class PhpcbfCommandTest extends TestCase
      */
     public function testGetBinaryName(): void
     {
-        $method = new ReflectionMethod($this->command, 'getBinaryName');
-
-        $this->assertSame(self::BIN, $method->invoke($this->command));
+        $this->assertSame('phpcbf', $this->callProtectedMethod($this->command, 'getBinaryName'));
     }
 }

@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Onepix\WpStaticAnalysis\Cli\PHPCS;
+namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\ConfigLocator;
 
 use Onepix\WpStaticAnalysis\Cli\ConfigLocator\AbstractConfigLocator;
 
-/**
- * Locates PHPCS standard files with fallback to default standard
- */
-final class StandardLocator extends AbstractConfigLocator
+final class TestableAbstractConfigLocator extends AbstractConfigLocator
 {
     /**
      * @inheritDoc
@@ -18,10 +15,7 @@ final class StandardLocator extends AbstractConfigLocator
     protected function getProjectConfigPaths(): array
     {
         return [
-            '.config/.phpcs.xml',
-            '.config/phpcs.xml',
-            '.config/.phpcs.xml.dist',
-            '.config/phpcs.xml.dist',
+            '.config/test.xml',
         ];
     }
 
@@ -31,6 +25,6 @@ final class StandardLocator extends AbstractConfigLocator
     #[\Override]
     protected function getDefaultConfigPath(): string
     {
-        return 'WpOnepixStandard';
+        return 'defaultPath';
     }
 }

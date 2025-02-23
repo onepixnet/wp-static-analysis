@@ -2,26 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\PHPCS;
+namespace Onepix\WpStaticAnalysis\Tests\Unit\Cli\Psalm;
 
-use Onepix\WpStaticAnalysis\Cli\PHPCS\StandardLocator;
+use Onepix\WpStaticAnalysis\Cli\Psalm\PsalmConfigLocator;
 use Onepix\WpStaticAnalysis\Tests\Util\ExposeProtectedMethods;
-use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use ReflectionException;
-use RuntimeException;
 
 /**
- * Test class for StandardLocator.
+ * Test class for PsalmConfigLocator.
  */
-#[CoversClass(StandardLocator::class)]
-final class StandardLocatorTest extends TestCase
+#[CoversClass(PsalmConfigLocator::class)]
+final class PsalmConfigLocatorTest extends TestCase
 {
     use ExposeProtectedMethods;
 
-    private StandardLocator $locator;
+    private PsalmConfigLocator $locator;
 
     /**
      * @inheritDoc
@@ -31,7 +28,7 @@ final class StandardLocatorTest extends TestCase
     {
         parent::setUp();
 
-        $this->locator = new StandardLocator();
+        $this->locator = new PsalmConfigLocator();
     }
 
     /**
@@ -42,7 +39,7 @@ final class StandardLocatorTest extends TestCase
     {
         /** @var string $configPath */
         $configPath = $this->callProtectedMethod($this->locator, 'getDefaultConfigPath');
-        $this->assertStringContainsString('Standard', $configPath);
+        $this->assertStringContainsString('psalm.xml', $configPath);
     }
 
     /**

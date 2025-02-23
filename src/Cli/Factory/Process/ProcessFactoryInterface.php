@@ -15,6 +15,8 @@ interface ProcessFactoryInterface
      * Create configured Process instance
      *
      * @param array<string> $command The command to run and its arguments
+     * @param string|null $cwd
+     * @param array|null $env
      */
-    public function create(array $command): Process;
+    public function create(array $command, ?string $cwd = null, ?array $env = null): Process;
 }
