@@ -64,3 +64,27 @@ vendor/bin/wp-static-analysis phpcs --ruleset=./phpcs/example.xml -- --colors
     <arg value="sp" />
 </ruleset>
 ```
+
+### Psalm
+
+```shell
+vendor/bin/wp-static-analysis psalm [OPTIONS] -- [<PSALM-ARGS>...]
+```
+
+`[PSALM-ARGS]`: Arguments from [Psalm](https://psalm.dev/docs/running_psalm/command_line_usage/)
+
+`[OPTIONS]`:
+
+- `--config` - Path to the custom `psalm.xml` file relative to the project
+
+If `--config` is not present, it checks the files in order of priority:
+
+1. `.config/psalm.xml`
+2. `.config/psalm.xml.dist`
+3. Default config from this package `config/psalm.xml`
+
+#### Example
+
+```
+vendor/bin/wp-static-analysis psalm --config=./phpcs/example.xml -- --help
+```
