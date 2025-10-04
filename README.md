@@ -13,7 +13,7 @@ composer require --dev onepix/wp-static-analysis
 
 ### Required
 
-- PHP 8.1+
+- PHP 8.3+
 
 ## CLI
 
