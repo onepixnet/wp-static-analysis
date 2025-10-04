@@ -1,0 +1,16 @@
+{
+    "name": "Onepix WP Static Analysis",
+    "dockerComposeFile": [
+        "./docker-compose.yml"
+    ],
+    "service": "php",
+    "customizations": {
+        "jetbrains": {
+            "plugins": [
+            ]
+        }
+    },
+    "mounts": [
+    ],
+    "postCreateCommand": "composer install"
+}
